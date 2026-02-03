@@ -1,0 +1,16 @@
+{
+  "development": {
+     "username": "root",
+     "password": "",
+     "database": "adminplem_donaciones",
+     "host": "localhost",
+     "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "",
+    "database": "cuestionarios",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
