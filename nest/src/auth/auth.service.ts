@@ -68,7 +68,7 @@ export class AuthService {
   if(userSaf.user.rango == 2 || userSaf.user.rango == 3 ){
      band = 1;
   }else if(userSaf.user.rango == 4){
-    if(userSaf.user.s_usuario.id_Dependencia == 3){
+    if(userSaf.user.s_usuario?.id_Dependencia == 3){
         band = 1;
     }else{
        band = 2;
