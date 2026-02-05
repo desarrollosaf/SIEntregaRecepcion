@@ -2866,7 +2866,7 @@ model s_reg_encuesta {
 
 model s_users {
   id        Int        @id @default(autoincrement())
-  username  String?    @db.VarChar(100)
+  username  String?    @db.VarChar(100) @unique(map: "s_users_username_unique")
   password  String?    @db.VarChar(100)
   salt      String?    @db.VarChar(7)
   email     String?    @db.VarChar(50)
@@ -2876,7 +2876,7 @@ model s_users {
   cursoweb  Int?
   pass      Int?
   s_usuario s_usuario? @relation(fields: [id_user], references: [id_Usuario], map: "usuario_users")
-
+  usersSaf users_safs[]
   @@index([id], map: "id")
   @@index([id_user], map: "usuario_users")
 }
@@ -2899,7 +2899,7 @@ model s_users21 {
 
 model s_usuario {
   id_Usuario              Int       @id @default(autoincrement())
-  N_Usuario               String?   @db.VarChar(100)
+  N_Usuario               String   @db.VarChar(100) @unique(map: "s_usuario_N_Usuario_unique")
   id_Dependencia          Int?
   id_Direccion            Int?
   id_Departamento         Int?
@@ -2920,6 +2920,7 @@ model s_usuario {
   updated_at              DateTime? @db.Timestamp(0)
   deleted_at              DateTime? @db.Timestamp(0)
   s_users                 s_users[]
+
 
   @@index([id_Usuario], map: "id_Usuario")
 }
@@ -3937,7 +3938,7 @@ model users_safs {
   id                BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
   name              String?   @db.VarChar(255)
   email             String?   @db.VarChar(255)
-  rfc               String?   @unique(map: "users_safs_rfc_unique") @db.VarChar(255)
+  rfc               String   @unique(map: "users_safs_rfc_unique") @db.VarChar(255)
   email_verified_at DateTime? @db.Timestamp(0)
   password          String    @db.VarChar(255)
   remember_token    String?   @db.VarChar(100)
@@ -3948,6 +3949,7 @@ model users_safs {
   created_at        DateTime? @db.Timestamp(0)
   updated_at        DateTime? @db.Timestamp(0)
   deleted_at        DateTime? @db.Timestamp(0)
+  user s_users @relation(fields: [rfc], references: [username])
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.

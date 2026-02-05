@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../../database/connection"));
 const s_usuario_1 = __importDefault(require("./s_usuario"));
+const s_users_1 = __importDefault(require("./s_users"));
 class UsersSafs extends sequelize_1.Model {
 }
 UsersSafs.init({
@@ -97,5 +98,10 @@ UsersSafs.hasOne(s_usuario_1.default, {
     sourceKey: 'rfc', // Campo en UsersSafs
     foreignKey: 'N_Usuario', // Campo en SUsuario
     as: 'datos_user',
+});
+UsersSafs.hasOne(s_users_1.default, {
+    sourceKey: 'rfc', // Campo en UsersSafs
+    foreignKey: 'username', // Campo en SUsuario
+    as: 's_users',
 });
 exports.default = UsersSafs;

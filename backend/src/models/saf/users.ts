@@ -7,7 +7,7 @@ import {
 } from 'sequelize';
 import sequelize from '../../database/connection';
 import SUsuario from './s_usuario';
-
+import SUsers from './s_users';
 class UsersSafs extends Model<
   InferAttributes<UsersSafs>,
   InferCreationAttributes<UsersSafs>
@@ -122,5 +122,11 @@ UsersSafs.hasOne(SUsuario, {
   sourceKey: 'rfc',          // Campo en UsersSafs
   foreignKey: 'N_Usuario',   // Campo en SUsuario
   as: 'datos_user',
+});
+
+UsersSafs.hasOne(SUsers, {
+  sourceKey: 'rfc',          // Campo en UsersSafs
+  foreignKey: 'username',   // Campo en SUsuario
+  as: 's_users',
 });
 export default UsersSafs;

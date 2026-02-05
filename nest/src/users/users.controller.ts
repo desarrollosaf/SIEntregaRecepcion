@@ -34,8 +34,11 @@ export class UsersController {
     return this.usersService.remove(+id);
   }
 
-  // @Body('rfc':string,'password':string)
-  //   login(){
-      
-  //   }
+  @Post('login')
+  login(@Body() body: any) {
+    console.log('llega a funcion')
+    const {rfc, password } = body;
+    return this.usersService.getUser(rfc, password);
+  }
+
 }

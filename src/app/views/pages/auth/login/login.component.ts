@@ -7,11 +7,11 @@ import { UserService } from '../../../../core/services/user.service';
 import { User } from '../../../../core/interfaces/user';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+// import { Console } from 'console';
 
 @Component({
     selector: 'app-login',
     imports: [
-      NgStyle,
       RouterLink,
       FormsModule
     ],
@@ -47,59 +47,47 @@ export class LoginComponent implements OnInit {
 
  
   onLoggedin(form: NgForm) {
-    // console.log('envio login')
     const user: User = {
       rfc: form.value.Urfc,
       password: form.value.Upassword
     };
 
     this._userService.login(user).subscribe({
-      next: (response: any) => {
-        const userData = response.user;
-        const bandera = response.bandera;
-        localStorage.setItem('isLoggedin', 'true'); 
-        this._userService.setCurrentUser(userData);
-        console.log(bandera)
-        if (bandera) {
-          this.router.navigate(['/donacion']);
-        } else {
-          // console.log('admin')
-          this.router.navigate(['/reportes']);
+      next: (res) => {
+       const userData = res.user;
+    
+        // const bandera = response.bandera;
+        // localStorage.setItem('isLoggedin', 'true'); 
+        // this._userService.setCurrentUser(userData);
+        // console.log('BANDRRAAAAAA '+bandera)
+        if (userData.bandera == 1) {
+           console.log('if bandera 1 titularws')
+          // this.router.navigate(['/donacion']);
+        } else if (userData.bandera == 2) {
+          console.log('operativo entregas ')
+          this.router.navigate(['/entregas']);
+        }else{
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "¡Atención!",
+            text: "No tiene acceso al sistema",
+            showConfirmButton: false,
+            timer: 3000
+          });
         }
       },
       error: (e: HttpErrorResponse) => {
-        if (e.status === 416) {
-          Swal.fire({
+        console.log('entra a error '+e.error?.message)
+         Swal.fire({
             position: "center",
             icon: "error",
-            title: "Ya no hay lugares disponibles.",
+            title: "¡Atención",
+            text: e.error?.message || 'Error al iniciar sesión',
             showConfirmButton: false,
             timer: 3000
           });
-        } else if (e.status === 400) {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Usuario no existe.",
-            showConfirmButton: false,
-            timer: 3000
-          });
-        }else if (e.status === 402) {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Contraseña incorrecta.",
-            showConfirmButton: false,
-            timer: 3000
-          });
-        } else {
-          console.error('Error desconocido:', e);
-        }
       },
     });
-
-    // console.log(user);
-    
   }
-
 }

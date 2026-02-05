@@ -2,14 +2,14 @@
   "development": {
      "username": "root",
      "password": "",
-     "database": "adminplem_donaciones",
+     "database": "entrega",
      "host": "localhost",
      "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": "",
-    "database": "cuestionarios",
+    "database": "entrega",
     "host": "localhost",
     "dialect": "mysql"
   }

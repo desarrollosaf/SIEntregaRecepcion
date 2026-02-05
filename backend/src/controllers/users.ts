@@ -7,8 +7,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import SUsuario from '../models/saf/s_usuario';
 import dotenv from 'dotenv';
 import { dp_fum_datos_generales } from '../models/fun/dp_fum_datos_generales'
-import Cita from '../models/citas'
-import Donaciones from '../models/donaciones'
+
 export const ReadUser = async (req: Request, res: Response): Promise<any> => {
     const listUser = await User.findAll();
     return res.json({
@@ -17,68 +16,30 @@ export const ReadUser = async (req: Request, res: Response): Promise<any> => {
     });
 }
 
-
-
 export const LoginUser = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const { rfc, password } = req.body;
-    let passwordValid = false;
+    // let passwordValid = false;
     let user: any = null;
-    let bandera = true;
 
-
-
-
-    if (rfc.startsWith('DO25')) {
-        bandera = false;
-        user = await UserBase.findOne({
-            where: { name: rfc },
-        })
-        if (!user) {
-            return res.status(400).json({
-                msg: `Usuario no existe con el rfc ${rfc}`
-            })
-        }
-        passwordValid = await bcrypt.compare(password, user.password);
-
-    } else {
+    user = await User.findOne({
+        where: { rfc: rfc },
         
+    })
+
+
+    if (!user) {
         return res.status(400).json({
-                msg: `Usuario no existe con el rfc ${rfc}`
+            msg: `Usuario no existe con el rfc ${rfc}`
         })
-        const asesor = await SUsuario.findOne({
-            where: { N_Usuario: rfc },
-            attributes: [
-                "Puesto",
-            ],
-            raw: true
-        });
-
-        if (!asesor || (asesor.id_Dependencia === 1 && asesor.Puesto && asesor.Puesto.toUpperCase().includes("ASESOR"))) {
-            return res.status(400).json({
-                msg: `Este rfc es de un asesor ${rfc}`
-            });
-        }
- 
-        user = await User.findOne({
-            where: { rfc: rfc },
-            include: [
-                {
-                    model: UsersSafs,
-                    as: 'datos_user',
-                },
-            ],
-        })
-        console.log(user.datos_user)
-        if (!user) {
-            return res.status(400).json({
-                msg: `Usuario no existe con el rfc ${rfc}`
-            })
-        }
-
-        const hash = user.password.replace(/^\$2y\$/, '$2b$');
-        passwordValid = await bcrypt.compare(password, hash);
-
     }
+       console.log('rango '+user.SUsers) 
+    if(user.SUsers.rango == 1 || user.SUsers.rango ==2 || user.SUsers.rango ==3){
+        console.log('jefe');
+    }else{
+        console.log('operativo');
+    } 
+
+    let passwordValid = await bcrypt.compare(password, user.password);
 
     if (!passwordValid) {
         return res.status(402).json({
@@ -86,17 +47,11 @@ export const LoginUser = async (req: Request, res: Response, next: NextFunction)
         })
     }
  
-    const donacionUser = await Donaciones.findOne({
-        where: { rfc: rfc }
-    });
-
-
     const accessToken = jwt.sign(
         { rfc: rfc },
         process.env.SECRET_KEY || 'TSE-Poder-legislativo',
         { expiresIn: '2h' }
     );
-
 
     res.cookie('accessToken', accessToken, {
         httpOnly: true,
@@ -106,7 +61,9 @@ export const LoginUser = async (req: Request, res: Response, next: NextFunction)
         path: '/',
     });
 
-    return res.json({ user, bandera })
+    
+
+    return res.json({ user })
 }
 
 export const getCurrentUser = async (req: Request, res: Response) => {
