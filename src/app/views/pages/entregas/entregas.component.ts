@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
 import { EntregaService } from '../../../service/entrega.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-entregas',
