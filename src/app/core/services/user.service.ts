@@ -19,7 +19,7 @@ export class UserService {
 
   constructor() { 
     this.myAppUrl =  enviroment.endpoint;
-    this.myAPIUrl = 'api/user';
+    this.myAPIUrl = 'auth';
 
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {

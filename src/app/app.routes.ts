@@ -17,27 +17,10 @@ export const routes: Routes = [
     children: [
       { path: '',  component: RedirectComponent,
       },
-      // {
-      //   path: 'citas',
-      //   loadComponent: () => import('./views/pages/citas/citas.component').then(c => c.CitasComponent)
-      // },
-      {
-        path: 'registro',
-        loadComponent: () => import('./views/pages/registro/registro.component').then(c => c.RegistroComponent)
+     {
+        path: 'entregas',
+        loadChildren: () => import('./views/pages/entregas/entregas.route')
       },
-      {
-        path: 'donacion',
-        loadComponent: () => import('./views/pages/donaciones/donaciones.component').then(c => c.DonacionesComponent)
-      },
-      {
-        path: 'registro/verifica',
-        loadComponent: () => import('./views/pages/verifica/verifica.component').then(c => c.VerificaComponent)
-      },
-      {
-        path: 'reportes',
-        canActivateChild: [UserAccessGuard],
-        loadChildren: () => import('./views/pages/reportes/reportes.route')
-      }
     ]
   },
   {

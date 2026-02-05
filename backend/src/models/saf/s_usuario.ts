@@ -9,7 +9,6 @@ import sequelize from '../../database/connection';
 import Dependencia from '../saf/t_dependencia';
 import Direccion from '../saf/t_direccion';
 import Departamento from '../saf/t_departamento';
-import sesion from '../sesion_cuestionario';
 
 class SUsuario extends Model<
   InferAttributes<SUsuario>,
@@ -57,11 +56,6 @@ class SUsuario extends Model<
       as: 'departamento',
     });
 
-    SUsuario.belongsTo(sesion,{
-      targetKey: "id_usuario",
-      foreignKey: 'N_Usuario',
-      as: "m_cuestionario"
-    })
   }
 }
 

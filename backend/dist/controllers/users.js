@@ -15,11 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.cerrarsesion = exports.getCurrentUser = exports.LoginUser = exports.ReadUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const users_1 = __importDefault(require("../models/saf/users"));
-const user_1 = __importDefault(require("../models/user"));
-const s_usuario_1 = __importDefault(require("../models/saf/s_usuario"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const s_usuario_2 = __importDefault(require("../models/saf/s_usuario"));
-const donaciones_1 = __importDefault(require("../models/donaciones"));
+const s_usuario_1 = __importDefault(require("../models/saf/s_usuario"));
+const s_users_1 = __importDefault(require("../models/saf/s_users"));
 const ReadUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listUser = yield users_1.default.findAll();
     return res.json({
@@ -30,63 +28,35 @@ const ReadUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.ReadUser = ReadUser;
 const LoginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { rfc, password } = req.body;
-    let passwordValid = false;
+    // let passwordValid = false;
     let user = null;
-    let bandera = true;
-    if (rfc.startsWith('DO25')) {
-        bandera = false;
-        user = yield user_1.default.findOne({
-            where: { name: rfc },
-        });
-        if (!user) {
-            return res.status(400).json({
-                msg: `Usuario no existe con el rfc ${rfc}`
-            });
-        }
-        passwordValid = yield bcrypt_1.default.compare(password, user.password);
-    }
-    else {
+    user = yield users_1.default.findOne({
+        where: { rfc: rfc },
+        include: [
+            {
+                model: s_users_1.default,
+                as: 's_users'
+            }
+        ]
+    });
+    if (!user) {
         return res.status(400).json({
             msg: `Usuario no existe con el rfc ${rfc}`
         });
-        const asesor = yield s_usuario_2.default.findOne({
-            where: { N_Usuario: rfc },
-            attributes: [
-                "Puesto",
-            ],
-            raw: true
-        });
-        if (!asesor || (asesor.id_Dependencia === 1 && asesor.Puesto && asesor.Puesto.toUpperCase().includes("ASESOR"))) {
-            return res.status(400).json({
-                msg: `Este rfc es de un asesor ${rfc}`
-            });
-        }
-        user = yield users_1.default.findOne({
-            where: { rfc: rfc },
-            include: [
-                {
-                    model: s_usuario_1.default,
-                    as: 'datos_user',
-                },
-            ],
-        });
-        console.log(user.datos_user);
-        if (!user) {
-            return res.status(400).json({
-                msg: `Usuario no existe con el rfc ${rfc}`
-            });
-        }
-        const hash = user.password.replace(/^\$2y\$/, '$2b$');
-        passwordValid = yield bcrypt_1.default.compare(password, hash);
     }
+    console.log('rango ' + user.s_users.rango);
+    if (user.SUsers.rango == 1 || user.SUsers.rango == 2 || user.SUsers.rango == 3) {
+        console.log('jefe');
+    }
+    else {
+        console.log('operativo');
+    }
+    let passwordValid = yield bcrypt_1.default.compare(password, user.password);
     if (!passwordValid) {
         return res.status(402).json({
             msg: `Password Incorrecto => ${password}`
         });
     }
-    const donacionUser = yield donaciones_1.default.findOne({
-        where: { rfc: rfc }
-    });
     const accessToken = jsonwebtoken_1.default.sign({ rfc: rfc }, process.env.SECRET_KEY || 'TSE-Poder-legislativo', { expiresIn: '2h' });
     res.cookie('accessToken', accessToken, {
         httpOnly: true,
@@ -95,12 +65,12 @@ const LoginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         maxAge: 2 * 60 * 60 * 1000,
         path: '/',
     });
-    return res.json({ user, bandera });
+    return res.json({ user });
 });
 exports.LoginUser = LoginUser;
 const getCurrentUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
-    const datos_user = yield s_usuario_2.default.findOne({
+    const datos_user = yield s_usuario_1.default.findOne({
         where: { N_Usuario: user.rfc },
         attributes: [
             "Nombre",

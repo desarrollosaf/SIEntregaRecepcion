@@ -1,14 +1,10 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors'
 import UsersSafs from '../models/saf/users';
-import rpreguntas from "../routes/preguntas";
 import routeUser from "../routes/user";
-import rcombos from  "../routes/combos";
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import { verifyToken } from '../middlewares/auth';
-import routeCitas from "../routes/citas";
-import routeDonacion from "../routes/donaciones";
 class Server {
 
     private app: Application
@@ -32,11 +28,7 @@ class Server {
     }
 
     router(){
-        this.app.use(rpreguntas);
-        this.app.use(rcombos);
         this.app.use(routeUser);
-        this.app.use(routeCitas);
-        this.app.use(routeDonacion);
 
     }
 
@@ -44,8 +36,8 @@ class Server {
     midlewares(){
         this.app.use(express.json())
         this.app.use(cors({
-            //origin: 'http://localhost:4200',
-            origin: 'https://donacionescongreso.siasaf.gob.mx',
+            origin: 'http://localhost:4200',
+            // origin: 'https://donacionescongreso.siasaf.gob.mx',
             credentials: true
         }));
 
@@ -55,10 +47,6 @@ class Server {
         this.app.use((req: Request, res: Response, next: NextFunction) => {
             const publicPaths = [
                 '/api/user/login',
-                '/api/citas/getcitasfecha/',
-                '/api/citas/exelgeneral/',
-                '/api/donacion/savedonacion/',
-                '/api/donacion/validate/' 
             ];
             const isPublic = publicPaths.some(path => req.originalUrl.startsWith(path));
             if (isPublic) {
