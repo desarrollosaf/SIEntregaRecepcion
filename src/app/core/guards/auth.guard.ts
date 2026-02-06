@@ -9,6 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   return userService.getCurrentUser().pipe(
     map(user => {
+      console.log(user)
       userService.setCurrentUser(user); 
       return true;
     }),

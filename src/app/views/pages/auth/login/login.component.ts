@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
 
     this._userService.login(user).subscribe({
       next: (res) => {
+        console.log(res)
        const userData = res.user;
     
         // const bandera = response.bandera;

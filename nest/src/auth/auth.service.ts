@@ -9,7 +9,7 @@ import { PrismaService } from '../prisma/prisma.service';
 
 
 @Injectable()
-export class AuthService {
+export class AuthService { 
    constructor(
     private prisma: PrismaService,
     private jwtService: JwtService
@@ -64,32 +64,32 @@ export class AuthService {
       throw new UnauthorizedException('Contraseña incorrecta');
     }
 
-  let band = 0;
-  if(userSaf.user.rango == 2 || userSaf.user.rango == 3 ){
-     band = 1;
-  }else if(userSaf.user.rango == 4){
-    if(userSaf.user.s_usuario?.id_Dependencia == 3){
-        band = 1;
-    }else{
-       band = 2;
+    let band = 0;
+    if(userSaf.user.rango == 2 || userSaf.user.rango == 3 ){
+      band = 1;
+    }else if(userSaf.user.rango == 4){
+      if(userSaf.user.s_usuario?.id_Dependencia == 3){
+          band = 1;
+      }else{
+        band = 2;
+      }
     }
-  }
 
-  const payload = {
-    id: String(userSaf.id),
-    rfc: userSaf.rfc,
-  };
-  
-  const accessToken = this.jwtService.sign(payload);
-
-    return {
-      access_token: accessToken,
-      user: {
-        id: String(userSaf.id),
-        rfc: userSaf.rfc,
-        bandera: band
-      },
+    const payload = {
+      id: String(userSaf.id),
+      rfc: userSaf.rfc,
     };
+    
+    const accessToken = this.jwtService.sign(payload);
+
+      return {
+        access_token: accessToken,
+        user: {
+          id: String(userSaf.id),
+          rfc: userSaf.rfc,
+          bandera: band
+        },
+      };
   }
 }
 
