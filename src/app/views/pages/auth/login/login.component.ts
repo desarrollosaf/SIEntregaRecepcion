@@ -61,10 +61,10 @@ export class LoginComponent implements OnInit {
         // localStorage.setItem('isLoggedin', 'true'); 
         // this._userService.setCurrentUser(userData);
         // console.log('BANDRRAAAAAA '+bandera)
-        if (userData.bandera == 1) {
+        if (userData.bandera === 1) {
            console.log('if bandera 1 titularws')
           // this.router.navigate(['/donacion']);
-        } else if (userData.bandera == 2) {
+        } else if (userData.bandera === 2) {
           console.log('operativo entregas ')
           this.router.navigate(['/entregas']);
         }else{

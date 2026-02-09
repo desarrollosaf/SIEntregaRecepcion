@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { EntregasComponent } from "./entregas.component";
 
 export default [
 //   { path: '/', redirectTo: 'entrega', pathMatch: 'full' },
@@ -6,8 +7,12 @@ export default [
     path: '',
     loadComponent: () => import('./entregas.component').then(c => c.EntregasComponent)
   },
-//   {
-//     path: 'register',
-//     loadComponent: () => import('./register/register.component').then(c => c.RegisterComponent)
-//   }
+  {
+    path: 'addRegistro',
+    loadComponent: () => import('./entrega/entrega.component').then(c => c.EntregaComponent)
+  },
+  {
+    path: 'edit/:id',
+    loadComponent: () => import('./entrega/entrega.component').then(c => c.EntregaComponent)
+  }
 ] as Routes;

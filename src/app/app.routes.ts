@@ -5,15 +5,15 @@ import { UserAccessGuard } from './views/pages/auth/user-access.guard';
 import { RedirectComponent } from './views/pages/auth/redirect.component';
 export const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./views/pages/auth/auth.routes')},
-  {
-    path: 'registro/verifica',
-    loadComponent: () => import('./views/pages/verifica/verifica.component').then(c => c.VerificaComponent)
-  },
+  // {
+  //   path: 'registro/verifica',
+  //   loadComponent: () => import('./views/pages/verifica/verifica.component').then(c => c.VerificaComponent)
+  // },
   
   {
     path: '',
     component: BaseComponent,
-    canActivateChild: [authGuard],
+    // canActivateChild: [authGuard],
     children: [
       { path: '',  component: RedirectComponent,
       },

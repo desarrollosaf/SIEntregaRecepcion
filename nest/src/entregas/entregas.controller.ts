@@ -7,17 +7,25 @@ import { UpdateEntregasDto } from './dto/update-entregas.dto';
 export class EntregasController {
   constructor(private readonly entregasService: EntregasService) {}
 
-  @Post()
+  @Post('saveRegistro')
   create(@Body() createEntregasDto: CreateEntregasDto) {
     return this.entregasService.create(createEntregasDto);
   }
 
   @Get()
    findAll() {
-      console.log('llega ')
       return this.entregasService.findAll();
     }
   
+  @Get('selectDeptos')
+    selectDeptos() {
+      return this.entregasService.selectDptos();
+    }
+
+  @Get('selectSP')
+    selectSP() {
+      return this.entregasService.selectSP();
+    }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -33,4 +41,7 @@ export class EntregasController {
   remove(@Param('id') id: string) {
     return this.entregasService.remove(+id);
   }
+
+  
+
 }

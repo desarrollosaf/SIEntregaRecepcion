@@ -22,7 +22,7 @@ export class EntregaService {
   }
 
   getRegistros(): Observable<[]> {
-    const url = `${this.myAppUrl}${this.myAPIUrl}/findAll`;
+    const url = `${this.myAppUrl}${this.myAPIUrl}`;
       return this.http.get<[]>(url)
   }
 }

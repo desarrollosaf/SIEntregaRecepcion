@@ -1,0 +1,40 @@
+<form [formGroup]="formRegistro" (ngSubmit)="saveRegistro()" class="forms-sample">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label> Departamento que entrega </label>
+                            <ng-select [items]="departamentosArray" (change)="getDeptos()" bindLabel="name" bindValue="id" formControlName="id_departamento"  placeholder="Seleccione una opción" class="form-control">
+                            </ng-select> 
+                        </div>
+                        <div class="col-md-4">
+                            <label> ¿Quien entrega? </label>
+                            <ng-select [items]="spArray" (change)="getSP()" bindLabel="name" bindValue="id" formControlName="rfc_entrega"  placeholder="Seleccione una opción" class="form-control">
+                            </ng-select> 
+                        </div>
+                         <div class="col-md-4">
+                            <label> ¿Quien recibe? </label>
+                            <ng-select [items]="spArray" (change)="getSP()" bindLabel="name" bindValue="id" formControlName="rfc_recibe"  placeholder="Seleccione una opción" class="form-control">
+                            </ng-select> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label> Fecha de movimiento </label>
+                            <input type="date" formControlName="fecha_movimiento" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="text-align: center;">
+                            <input type="hidden" formControlName="id" class="form-control" >
+                            <button type="submit" class="btn btn-primary btn-icon-text">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+                        
