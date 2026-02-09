@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-entregas',
+    standalone: true,
   imports: [
     NgxDatatableModule,
     CommonModule,
@@ -61,7 +62,7 @@ export class EntregasComponent {
 getRegistros(){
     this._entregas.getRegistros().subscribe({
       next: (response: any) => {
-        this.originalData = [...response.data];
+        this.originalData = [...response];
         this.temp = [...this.originalData];
         this.filteredCount = this.temp.length;
         this.setPage({ offset: 0 });

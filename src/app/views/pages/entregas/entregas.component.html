@@ -1,1 +1,74 @@
-<p>entregas works!</p>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4> Registros</h4><br>
+                <div class="row align-items-center mb-3">
+                    <a routerLink="/entregas/addRegistro">
+                        <button type="button" class="btn btn-primary btn-icon-text">
+                        <i class="btn-icon-prepend" data-feather="plus-circle"></i>
+                            Agregar registro
+                        </button>
+                    </a>
+                </div>
+        
+                <br><br>
+                <div class="row align-items-center mb-3">
+                    <div class="col-xl-3 col-md-4">
+                        <input type="text" class="form-control form-control-sm" placeholder="Buscar..." (input)="updateFilter($event)" />
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <div *ngIf="rows.length === 0 && !loading" class="text-center my-3">
+                        <p><strong>No hay datos para mostrar</strong></p>
+                    </div>
+
+                    <ngx-datatable #table class="bootstrap" [rows]="rows" [columnMode]="'force'" [headerHeight]="50"  *ngIf="rows.length > 0"
+                        [externalSorting]="true" 
+                        [externalPaging]="true" [footerHeight]="50" [rowHeight]="'auto'" [limit]="pageSize" [count]="filteredCount"
+                        [offset]="page" (page)="setPage($event)" [loadingIndicator]="loading" >                  
+                        <ngx-datatable-column [headerClass]="'text-center'" [cellClass]="'text-center'" name="Departamento">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.departamento.nombre_completo }} 
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column [headerClass]="'text-center'" [cellClass]="'text-center'" name="Entrega">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.usuario_entrega.Nombre }}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [headerClass]="'text-center'" [cellClass]="'text-center'" name="Recibe">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.usuario_recibe.Nombre}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                         <ngx-datatable-column [headerClass]="'text-center'" [cellClass]="'text-center'" name="Fecha de movimiento">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.fecha_movimiento}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [headerClass]="'text-center'" [cellClass]="'text-center'" name="Acciones">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <button type="button" class="btn btn-sm btn-outline-dark btn-icon" data-toggle="tooltip" data-placement="top" title="Editar"   routerLink="/entregas/edit/{{row.id}}" *ngIf="row.status == true">
+                                    <i class="feather icon-edit"></i>
+                                </button>  
+
+                                 <button type="button" class="btn btn-sm btn-outline-dark btn-icon" data-toggle="tooltip" data-placement="top" title="Desactivar"   *ngIf="row.status == true">
+                                    <i class="feather icon-trash"></i>
+                                </button>
+
+                                 <button type="button" class="btn btn-sm btn-outline-dark btn-icon" data-toggle="tooltip" data-placement="top" title="Activar" *ngIf="row.status == false">
+                                    <i class="feather icon-check"></i>
+                                </button> 
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

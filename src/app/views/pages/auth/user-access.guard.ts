@@ -14,11 +14,11 @@ export class UserAccessGuard implements CanActivate, CanActivateChild {
   canActivate(): boolean {
     
     const rfc = this.userService.currentUserValue?.rfc ?? '';
-    const role = rfc.startsWith('DO25') ? 'DO25' : 'usuario';
+    // const role = rfc.startsWith('DO25') ? 'DO25' : 'usuario';
 
-    if (role == 'DO25') {
-      return true;
-    }
+    // if (role == 'DO25') {
+    //   return true;
+    // }
 
     this.router.navigate(['/not-authorized']);
     return false;
