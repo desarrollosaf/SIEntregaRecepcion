@@ -1,0 +1,372 @@
+:host {
+  display: block;
+}
+
+/* ==========================
+   SECCIÓN HERO BUSCADOR
+   ========================== */
+
+.hero-books {
+  min-height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem 1rem;
+  background: radial-gradient(circle at top, #fdf2df 0, #ffffff 40%, #f9f3ea 100%);
+}
+
+.hero-books-inner {
+  max-width: 1100px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2.5rem 2.75rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
+  gap: 2.5rem;
+  border: 1px solid rgba(214, 186, 145, 0.5);
+}
+
+.hero-books-text h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #4b270b;
+}
+
+.hero-books-text p {
+  margin-top: 0.75rem;
+  color: #6b6b6b;
+  max-width: 480px;
+  font-size: 0.98rem;
+}
+
+/* Formulario de búsqueda */
+.hero-books-form {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hero-books-form input {
+  flex: 1 1 2130px;
+  border-radius: 999px;
+  border: 1px solid #e1d3c0;
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.hero-books-form input:focus {
+  border-color: #c69a58;
+  box-shadow: 0 0 0 3px rgba(198, 154, 88, 0.15);
+}
+
+.hero-books-form button {
+  border-radius: 999px;
+  border: none;
+  padding: 0.9rem 1.6rem;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, #c69a58, #915021);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.15s ease;
+}
+
+.hero-books-form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  filter: brightness(1.05);
+}
+
+/* Metadatos */
+.hero-books-meta {
+  margin-top: 1.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.3rem;
+  font-size: 0.82rem;
+  color: #8a6a41;
+}
+
+/* Ilustración de libros */
+.hero-books-illustration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.books-shelf {
+  width: 100%;
+  max-width: 260px;
+  height: 170px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #f6e5cf, #f0d1a9);
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.books-shelf .book {
+  border-radius: 10px;
+  width: 30px;
+  height: 100px;
+  background: #d9b58b;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
+}
+
+.books-shelf .b2 {
+  height: 130px;
+  background: #c38a5a;
+}
+.books-shelf .b3 {
+  height: 120px;
+  background: #b96a3f;
+}
+.books-shelf .b4 {
+  height: 110px;
+  background: #e5c292;
+}
+.books-shelf .b5 {
+  height: 90px;
+  background: #cf8f58;
+}
+
+.hero-books-illustration p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #8b6a42;
+  text-align: center;
+}
+
+/* ==========================
+   RESULTADOS
+   ========================== */
+
+.results-section {
+  padding: 2rem 1.5rem 3rem;
+  background: #fdf7ef;
+}
+
+.results-section.empty {
+  padding-top: 1rem;
+}
+
+.results-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+}
+
+.results-header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #4b270b;
+}
+
+.results-header span {
+  font-size: 0.85rem;
+  color: #8a6a41;
+}
+
+/* Grid para múltiples tarjetas */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Tarjeta tipo expediente */
+.record-card {
+  background: #fbf4e9;
+  border-radius: 22px;
+  border: 2px solid #d8c3a4;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.record-card:hover {
+  transform: translateY(-9px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+/* Encabezado de tarjeta */
+.record-header {
+  text-align: center;
+  background: #f3e5d2;
+  padding: 0.9rem 0.7rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #4b270b;
+  border-bottom: 1px solid #d8c3a4;
+  letter-spacing: 0.03em;
+}
+
+/* Cuerpo de tarjeta */
+.record-body {
+  padding: 1.1rem 1.4rem 0.7rem;
+  font-size: 0.9rem;
+  color: #3b2a17;
+}
+
+.record-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.75rem 1.5rem;
+  align-content: center;
+}
+
+.record-col p {
+  margin: 0.2rem 0;
+  line-height: 1.25rem;
+}
+
+.record-col strong {
+  font-weight: 600;
+  color: #5a3a18;
+}
+
+/* Footer / botón */
+.record-footer {
+  padding: 0.9rem 1.3rem 1.1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.record-footer button {
+  background: #b0184a;
+  border: none;
+  padding: 0.6rem 1.8rem;
+  border-radius: 14px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+
+.paginastext {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 5px 15px 15px;
+}
+
+.record-footer button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.div-pagination{
+  padding: 1.5rem 1.3rem 1.1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.div-pagination button {
+  // background: #b0184a;
+  border: none;
+  padding: 0.6rem 1.8rem;
+  // border-radius: 14px;
+  color: #000000;
+  font-weight: 1600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(209, 4, 4, 0.15);
+  transition: all 0.2s ease;
+}
+
+.div-pagination button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-9px);
+}
+/* Mensaje vacío */
+.results-empty {
+  text-align: center;
+  color: #6e5a3b;
+  font-size: 0.95rem;
+}
+
+/* ==========================
+   RESPONSIVO
+   ========================== */
+
+@media (max-width: 900px) {
+  .hero-books-inner {
+    grid-template-columns: 1fr;
+    padding: 2.1rem 1.6rem;
+  }
+
+  .hero-books-illustration {
+    order: -1; /* La ilustración pasa arriba en móvil */
+  }
+}
+
+@media (max-width: 600px) {
+  .results-section {
+    padding-inline: 1rem;
+  }
+
+  .record-body {
+    padding-inline: 1rem;
+  }
+
+  .record-footer {
+    padding-inline: 1rem;
+  }
+
+  .record-columns {
+    grid-template-columns: 1fr; /* columnas se apilan en móvil */
+  }
+
+  pagination-container {
+  width: 100%;
+  margin-top: 25px;
+  display: flex;
+  justify-content: center; /* centra todo */
+}
+
+.page-btn {
+  padding: 6px 12px;
+  border: none;
+  background: #0056b3;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.page-info {
+  font-weight: bold;
+}
+
+.nomExp{
+  text-align: center !important;
+  text-justify: inter-word;
+  width: 100%;
+  white-space: normal !important;
+  flex: 0 0 auto;
+  word-break: break-all;
+}
+}

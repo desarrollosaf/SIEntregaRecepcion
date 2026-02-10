@@ -43,12 +43,16 @@ export class AuthService {
       include: {
         user : {
           include: {
-            s_usuario: true
+              s_usuario: {
+                  include: {
+                    departamento: true
+                  }
+              }
+            }
           }
         }
-
-      },
-    })
+      })
+  
 
     if (!userSaf) {
       throw new UnauthorizedException('El usuario no existe');
@@ -78,6 +82,8 @@ export class AuthService {
     const payload = {
       id: String(userSaf.id),
       rfc: userSaf.rfc,
+      bandera: band,
+      depto: userSaf.user.s_usuario?.departamento.nombre_completo
     };
     
     const accessToken = this.jwtService.sign(payload);
@@ -87,7 +93,9 @@ export class AuthService {
         user: {
           id: String(userSaf.id),
           rfc: userSaf.rfc,
-          bandera: band
+          bandera: band,
+          depto: userSaf.user.s_usuario?.departamento.nombre_completo,
+          depto_id: userSaf.user.s_usuario?.departamento.id_Departamento,
         },
       };
   }

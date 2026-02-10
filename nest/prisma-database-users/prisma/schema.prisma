@@ -2903,7 +2903,7 @@ model s_usuario {
   N_Usuario               String   @db.VarChar(100) @unique(map: "s_usuario_N_Usuario_unique")
   id_Dependencia          Int?
   id_Direccion            Int?
-  id_Departamento         Int?
+  id_Departamento         Int
   Nombre                  String    @db.LongText
   A_Paterno               String?   @db.VarChar(25)
   A_Materno               String?   @db.VarChar(25)
@@ -2921,6 +2921,7 @@ model s_usuario {
   updated_at              DateTime? @db.Timestamp(0)
   deleted_at              DateTime? @db.Timestamp(0)
   s_users                 s_users[]
+  departamento t_departamento @relation(fields:[id_Departamento], references: [id_Departamento])
 
 
   @@index([id_Usuario], map: "id_Usuario")
@@ -3473,7 +3474,7 @@ model t_departamento {
   nombre_completo String?      @db.VarChar(500)
   nom_cap         String?      @db.LongText
   t_direccion     t_direccion? @relation(fields: [id_Direccion], references: [id_Direccion], onDelete: NoAction, map: "fk_departamento_direccion")
-
+  usuarios s_usuario[]
   @@index([id_Direccion], map: "fk_departamento_direccion")
   @@index([id_Departamento], map: "id_Departamento")
 }

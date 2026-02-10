@@ -11,6 +11,9 @@ async function bootstrap() {
     credentials: true,
   });
 
+  (BigInt.prototype as any).toJSON = function () {
+    return this.toString();
+  };
 
   await app.listen(process.env.PORT ?? 3000);
 }
