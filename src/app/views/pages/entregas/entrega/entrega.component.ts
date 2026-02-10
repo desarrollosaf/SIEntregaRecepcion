@@ -77,6 +77,7 @@ export class EntregaComponent {
         })
       })
     }else{
+      delete registro.id;
       this._registros.saveRegistro(registro).subscribe(data => {
         Swal.fire({
               title: '',

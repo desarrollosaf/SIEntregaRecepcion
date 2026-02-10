@@ -22,3 +22,13 @@ model registro {
   rfc_movimiento   String
   status           Boolean  @default(true)
 }
+
+model documentos {
+  id Int @id @default(autoincrement())
+  id_departamento Int
+  path_marco String?
+  path_manual String?
+  path_doc1 String?
+  path_doc2 String?
+  status Boolean @default(true)
+}

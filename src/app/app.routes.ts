@@ -21,6 +21,10 @@ export const routes: Routes = [
         path: 'entregas',
         loadChildren: () => import('./views/pages/entregas/entregas.route')
       },
+      {
+        path: 'documentacion',
+        loadChildren: () => import('./views/pages/documentaciones/documentacion.routes')
+      },
     ]
   },
   {

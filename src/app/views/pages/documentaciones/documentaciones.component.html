@@ -1,0 +1,134 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4> ADSCRIPCIÓN: {{userLogin?.depto}} </h4><br>     
+                
+                
+
+                <section class="results-section">
+                    <div class="results-inner">
+                        <div class="results-grid">
+                        <!-- <article class="record-card" (click)="openSmModal(smModal, item.id)"> -->
+                            <!-- marco juridico -->
+                            <article class="record-card" (click)="openSmModal(smModal, 1)">
+                                <header class="record-header">
+                                    Marco Jurídico
+                                </header>
+                                <div class="record-body">
+                                    <p class="nomExp"> SIN DOCUMENTO</p>
+                                    <div class="record-columns">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </article>
+                            <!-- Manual de procedimientos -->
+                             <article class="record-card">
+                                <header class="record-header">
+                                    Manual de procedimientos
+                                </header>
+                                <div class="record-body">
+                                    <p class="nomExp"> NOMBRE</p>
+                                    <div class="record-columns">
+                                    <div class="record-col">
+                                        <p><strong>Año:</strong> </p>
+                                        <p><strong>Tomo:</strong> </p>
+                                        <p><strong>Número de expediente:</strong> </p>
+                                    </div>
+                                    <div class="record-col">
+                                        
+                                        <p><strong>Fecha final:</strong> </p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <!-- otro 1 -->
+                             <article class="record-card">
+                                <header class="record-header">
+                                    otro
+                                </header>
+                                <div class="record-body">
+                                    <p class="nomExp"> NOMBRE</p>
+                                    <div class="record-columns">
+                                    <div class="record-col">
+                                        <p><strong>Año:</strong> </p>
+                                        <p><strong>Tomo:</strong> </p>
+                                        <p><strong>Número de expediente:</strong> </p>
+                                    </div>
+                                    <div class="record-col">
+                                        
+                                        <p><strong>Fecha final:</strong> </p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </article>
+                             <!-- otro 2 -->
+                             <article class="record-card">
+                                <header class="record-header">
+                                    otro 2
+                                </header>
+                                <div class="record-body">
+                                    <p class="nomExp"> NOMBRE</p>
+                                    <div class="record-columns">
+                                    <div class="record-col">
+                                        <p><strong>Año:</strong> </p>
+                                        <p><strong>Tomo:</strong> </p>
+                                        <p><strong>Número de expediente:</strong> </p>
+                                    </div>
+                                    <div class="record-col">
+                                        
+                                        <p><strong>Fecha final:</strong> </p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #smModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cargar documento  </h5>
+        <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button> 
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formDocs" (ngSubmit)="addDoc()" class="forms-sample">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <h6 class="modal-title" id="exampleModalLabel"> 
+                                    <label *ngIf="formDocs.value.tipo === 1">  Marco Jurídico </label> 
+                                    <label *ngIf="formDocs.value.tipo === 2">  Manual de procedimientos </label>
+                                    <label *ngIf="formDocs.value.tipo === 3">  Docs 1 </label>
+                                    <label *ngIf="formDocs.value.tipo === 4">  Docs 2 </label>
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label> Documento:  </label>
+                                    <input type="file" formControlName="path" name="path" class="form-control"  (change)="onFileSelected($event)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cancelar</button>
+        <button type="submit" (click)="addDoc()" class="btn btn-primary btn-icon-text">Guardar</button>
+    </div>
+</ng-template>

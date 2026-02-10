@@ -3,6 +3,7 @@ import { CreateEntregasDto } from './dto/create-entregas.dto';
 import { UpdateEntregasDto } from './dto/update-entregas.dto';
 import { prismaSaf } from '../../prisma-database-entrega-recepcion/prisma/prisma';
 import { prismaUsers } from '../../prisma-database-users/prisma/prisma';
+import { ref } from 'process';
 @Injectable()
 export class EntregasService {
   async create(createEntregasDto: CreateEntregasDto) {
@@ -69,13 +70,17 @@ export class EntregasService {
   }
 
   async update(id: number, updateEntregasDto: UpdateEntregasDto) {
-     return prismaSaf.registro.update({
+     const reg = prismaSaf.registro.update({
       where:{ id },
       data: {
         ...updateEntregasDto,
       fecha_movimiento: new Date(updateEntregasDto.fecha_movimiento),
       }
     })
+    return {
+      ...reg,
+      id_departamento: Number((await reg).id_departamento),
+    };
   }
 
   remove(id: number) {

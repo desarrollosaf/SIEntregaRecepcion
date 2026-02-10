@@ -54,16 +54,16 @@ export class LoginComponent implements OnInit {
 
     this._userService.login(user).subscribe({
       next: (res) => {
-        console.log(res)
-       const userData = res.user;
-    
+      const userData = res.user;
+      localStorage.setItem('token', res.access_token);
+      localStorage.setItem('user', JSON.stringify(res.user));
         // const bandera = response.bandera;
         // localStorage.setItem('isLoggedin', 'true'); 
         // this._userService.setCurrentUser(userData);
         // console.log('BANDRRAAAAAA '+bandera)
         if (userData.bandera === 1) {
            console.log('if bandera 1 titularws')
-          // this.router.navigate(['/donacion']);
+          this.router.navigate(['/documentacion']);
         } else if (userData.bandera === 2) {
           console.log('operativo entregas ')
           this.router.navigate(['/entregas']);
