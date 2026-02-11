@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { prismaUsers } from '../../prisma-database-users/prisma/prisma';
 import { PrismaService } from '../prisma/prisma.service';
+import { of } from 'rxjs';
 
 
 @Injectable()
@@ -98,6 +99,10 @@ export class AuthService {
           depto_id: userSaf.user.s_usuario?.departamento.id_Departamento,
         },
       };
+  }
+
+  cerrarsesion(){
+    return { message: 'Sesión cerrada correctamente' };
   }
 }
 

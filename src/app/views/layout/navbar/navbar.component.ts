@@ -125,6 +125,7 @@ export class NavbarComponent implements OnInit {
     this._userService.logout().subscribe({
       next: () => {
         // Limpia cualquier dato local
+        localStorage.removeItem('token');
         localStorage.removeItem('currentUser');
         localStorage.setItem('isLoggedin', 'false');
         this._userService.setCurrentUser(null);

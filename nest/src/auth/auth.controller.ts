@@ -39,4 +39,9 @@ export class AuthController {
     ) {
       return this.authService.login(rfc, password);
   }
+
+  @Post('cerrarsesion')
+  cerrarsesion(){
+    return this.authService.cerrarsesion();
+  }
 }

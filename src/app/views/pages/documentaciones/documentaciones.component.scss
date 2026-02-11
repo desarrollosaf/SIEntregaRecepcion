@@ -229,7 +229,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.75rem 1.5rem;
-  align-content: center;
+  justify-items: center; /* centra horizontal */
+  align-items: center; 
 }
 
 .record-col p {

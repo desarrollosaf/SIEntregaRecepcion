@@ -16,13 +16,16 @@ export class DocumentosService {
     this.myAPIUrl = 'documentos';
   }
 
-  getDocs(): Observable<[]> {
-    const url = `${this.myAppUrl}${this.myAPIUrl}`;
-      return this.http.get<[]>(url)
+  getDocs(id: any){
+      const url = `${this.myAppUrl}${this.myAPIUrl}/${id}`;
+    return this.http.get(url)
   }
-
   addDoc(data:any): Observable<string> {
     return this.http.post<string>(`${this.myAppUrl}${this.myAPIUrl}/saveDoc/`,data)
+  }
+
+  verDoc(data: any): Observable<string> {
+    return this.http.post<string>(`${this.myAppUrl}${this.myAPIUrl}/verDoc/`,data)
   }
   
 }
