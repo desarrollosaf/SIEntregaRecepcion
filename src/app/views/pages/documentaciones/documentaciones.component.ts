@@ -22,11 +22,11 @@ import { DocumentosService } from '../../../service/documentos.service';
   styleUrl: './documentaciones.component.scss'
 })
 export class DocumentacionesComponent {
-  formRegistros: any;
   id: any; 
   userLogin: any;
   formDocs: FormGroup;
   selectedFile!: File;
+  docs: any;
   public _documentos = inject(DocumentosService);
 
   constructor(
@@ -35,10 +35,6 @@ export class DocumentacionesComponent {
       private fb: FormBuilder,
       private  aRouter: ActivatedRoute
     ){
-      this.formRegistros = this.fb.group({
-        seccion: [''],
-      });
-  
       this.id = aRouter.snapshot.paramMap.get('id');
 
       this.formDocs = this.fb.group({
@@ -50,23 +46,20 @@ export class DocumentacionesComponent {
     ngOnInit(): void {
       this.userLogin = JSON.parse(localStorage.getItem('user') || '{}');
       this.getDocs();
-      this.getUser();
     }
 
     getDocs(){
-      this._documentos.getDocs().subscribe({  
+      this._documentos.getDocs(this.userLogin.depto_id).subscribe({   
+        next: (response: any) => {
+            this.docs = response;
+        }
       });
-    }
-
-    getUser(){
-
     }
 
     openSmModal(content:any, tipo: number){
       this.formDocs.patchValue({tipo: tipo})
-      console.log("Form:", this.formDocs.value);
       const modalRef = this.modelService.open(content, {size:'lg'}).result.then((result) =>{
-       
+
       }).catch((res) => {})
     }
 
@@ -88,9 +81,30 @@ export class DocumentacionesComponent {
               timer: 2000,
               showConfirmButton: false
             }).then((result) => {
-              
+              this.modelService.dismissAll();
               this.router.navigateByUrl('/documentacion') 
             })
       })
+    }
+
+    verDoc(tipo: number){
+      const datos: any = {
+        id_departamento: this.userLogin.depto_id,
+        tipo: tipo
+      }
+      this._documentos.verDoc(datos).subscribe((resp: any)=> {
+        if(!resp.path || resp.path == 0){
+          Swal.fire({
+            title: '',
+            text: 'No hay documento cargado',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          })
+        }else{
+          const url = `http://localhost:3000/documentos/${resp.path}`;
+          window.open(url, '_blank');
+        }
+      });
     }
 }

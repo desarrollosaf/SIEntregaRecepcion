@@ -36,6 +36,12 @@ export class DocumentosController {
     return this.documentosService.create(file, createDocumentoDto, updateDocumentoDto);
   }
 
+  @Post('verDoc')
+   verDoc(@Body() createDocumentoDto: CreateDocumentoDto) {
+       return this.documentosService.verDoc(createDocumentoDto);
+     }
+
+
   @Get()
   findAll() {
     return this.documentosService.findAll();

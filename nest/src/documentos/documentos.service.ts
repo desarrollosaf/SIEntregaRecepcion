@@ -8,7 +8,7 @@ import { ConnectableObservable } from 'rxjs';
 @Injectable()
 export class DocumentosService {
   async create(file: Express.Multer.File, createDocumentoDto: CreateDocumentoDto, updateDocumentoDto: UpdateDocumentoDto) {
-    const path = file.path; 
+    const path = file.filename; 
 
     const campoMap: Record<number, string> = {
       1: 'path_marco',
@@ -17,13 +17,6 @@ export class DocumentosService {
       4: 'path_doc2',
     };
     
-    const campo = campoMap[Number(createDocumentoDto.tipo)];
-
-    if (campo) {
-      createDocumentoDto[campo] = path;
-      updateDocumentoDto[campo] = path;
-    }
-    const { tipo: _, ...dataSinTipo } = createDocumentoDto;
 
     const reg = await prismaSaf.documentos.findFirst({
       where: {
@@ -32,17 +25,27 @@ export class DocumentosService {
     })
 
     if(reg){
-      const reg1 = prismaSaf.documentos.update({
-      where:{ id: reg.id },
-      data: {
-        ...updateDocumentoDto
-      }
-    })
-    return {
-      ...reg,
-      id_departamento: Number(dataSinTipo.id_departamento),
-    };
+    const campo = campoMap[Number(updateDocumentoDto.tipo)];
+    if (campo) {
+      updateDocumentoDto[campo] = Number(createDocumentoDto.id_departamento)+'/'+path;
+    }
+    const { tipo: _, ...dataSinTipo } = updateDocumentoDto;
+
+      console.log('modifica esto ',updateDocumentoDto)
+      return await prismaSaf.documentos.update({
+        where:{ id: Number(reg.id) },
+        data: {
+          ...dataSinTipo,
+          id_departamento: Number(dataSinTipo.id_departamento)
+        }
+      })
     }else{
+      const campo = campoMap[Number(createDocumentoDto.tipo)];
+    if (campo) {
+      createDocumentoDto[campo] = path;
+    }
+    const { tipo: _, ...dataSinTipo } = createDocumentoDto;
+
       return await prismaSaf.documentos.create({
       data: {
         ...dataSinTipo,
@@ -56,8 +59,13 @@ export class DocumentosService {
     return `This action returns all documentos`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} documento`;
+  async findOne(id: number) {
+    const depto = await prismaSaf.documentos.findFirst({
+      where: {
+        id_departamento: id
+      }
+    })
+    return depto;
   }
 
   update(id: number, updateDocumentoDto: UpdateDocumentoDto) {
@@ -66,5 +74,31 @@ export class DocumentosService {
 
   remove(id: number) {
     return `This action removes a #${id} documento`;
+  }
+
+  async verDoc(createDocumentoDto: CreateDocumentoDto){
+    const docs = await prismaSaf.documentos.findFirst({
+      where:{ id_departamento: createDocumentoDto.id_departamento}
+    })
+    const campoMap: Record<number, string> = {
+      1: 'path_marco',
+      2: 'path_manual',
+      3: 'path_doc1',
+      4: 'path_doc2',
+    };
+    if(docs){
+      const campo = campoMap[Number(createDocumentoDto.tipo)];
+      const path = docs[campo];
+      if(path){
+         console.log('entra path  ',path)
+        return {
+          path: path
+        };
+      }else{
+       return {
+          path: 0
+        };
+      }
+    }
   }
 }
